@@ -2,8 +2,8 @@ import requests
 
 url = "http://localhost:5000/process-paths"
 payload = {
-    "jd_path": "Data/SALES_job_description.txt",
-    "resume_folder": "Resumes_to_parse/data/SALES"
+    "jd_path": "Data/HR_job_description.txt",
+    "resume_folder": "Resumes_to_parse/data/HR"
 }
 
 response = requests.post(url, json=payload)

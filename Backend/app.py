@@ -14,39 +14,6 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 def health_check():
     return jsonify({"status": "ok"}), 200
 
-@app.route("/upload", methods=["POST"])
-def upload_files():
-    if 'job_description' not in request.files:
-        return jsonify({"error": "Missing job description file"}), 400
-
-    jd_file = request.files['job_description']
-    resume_files = request.files.getlist('resumes')
-
-    # Save job description
-    jd_path = os.path.join(UPLOAD_DIR, "job_description.txt")
-    jd_file.save(jd_path)
-
-    # Create a temporary folder to hold resumes
-    resume_folder = os.path.join(UPLOAD_DIR, "resumes")
-    os.makedirs(resume_folder, exist_ok=True)
-
-    # Clear previous files
-    for f in os.listdir(resume_folder):
-        os.remove(os.path.join(resume_folder, f))
-
-    # Save all uploaded resumes
-    for rfile in resume_files:
-        if rfile.filename.endswith((".pdf", ".docx")):
-            save_path = os.path.join(resume_folder, rfile.filename)
-            rfile.save(save_path)
-
-    # Run the ranking processor
-    try:
-        results = process_resumes(jd_path, resume_folder)
-        return jsonify({"results": results})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
 @app.route("/process-paths", methods=["POST"])
 def process_from_paths():
     data = request.get_json()
