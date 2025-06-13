@@ -114,37 +114,17 @@ function App() {
     formData.append("job_description", jobDescription)
 
     try {
-      // Simulate API call with mock data for demonstration
-      // In a real app, uncomment the fetch call below
-      /*
-      const response = await fetch('http://localhost:5000/evaluate', {
+      // Real API call to backend
+      const response = await fetch('https://your-backend.up.railway.app/evaluate', {
         method: 'POST',
         body: formData,
       });
       const data = await response.json();
-      */
-
-      // Mock response for demonstration
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      const data = {
-        overall_score: Math.floor(Math.random() * 40) + 60,
-        skills: [
-          { name: "JavaScript", match: Math.floor(Math.random() * 30) + 70 },
-          { name: "React", match: Math.floor(Math.random() * 30) + 70 },
-          { name: "Node.js", match: Math.floor(Math.random() * 30) + 70 },
-          { name: "Python", match: Math.floor(Math.random() * 40) + 60 },
-          { name: "SQL", match: Math.floor(Math.random() * 40) + 60 },
-          { name: "MongoDB", match: Math.floor(Math.random() * 50) + 50 },
-        ],
-        recommendations: [
-          "Highlight your experience with React and Node.js more prominently",
-          "Add more details about your database experience",
-          "Include specific metrics and achievements from previous roles",
-          "Consider adding a skills section with proficiency levels",
-          "Tailor your resume summary to match this specific job description",
-        ],
+      if (!response.ok) {
+        setError(data.error || 'Error processing resume');
+        setLoading(false);
+        return;
       }
-
       setResult(data)
 
       // Save to recent uploads
