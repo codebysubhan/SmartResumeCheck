@@ -24,3 +24,11 @@ def load_resumes_from_folder(folder_path):
             except Exception as e:
                 print(f"❌ Failed to process {filename}: {e}")
     return resumes
+
+def read_resume_file(file_path):
+    try:
+        text = extract_text_generic(file_path)
+        return text
+    except Exception as e:
+        print(f"❌ Failed to read resume file {file_path}: {e}")
+        raise
