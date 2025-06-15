@@ -6,3 +6,4 @@ spacy>=3.7.0
 pdfminer.six>=20221105
 python-docx>=0.8.11
 pandas>=2.0.0
+gunicorn>=20.1.0
