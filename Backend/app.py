@@ -95,5 +95,30 @@ def evaluate_csv_resumes():
             print(f"❌ Error processing CSV file: {e}")
             return jsonify({"error": str(e)}), 500
 
+@app.route("/evaluate-folder", methods=["POST"])
+def evaluate_folder():
+    if 'resumes' not in request.files:
+        return jsonify({"error": "No resume files provided"}), 400
+
+    files = request.files.getlist("resumes")
+    results = []
+
+    for file in files:
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(UPLOAD_DIR, filename)
+        file.save(filepath)
+        try:
+            result = process_single_resume(filepath, JD_PATH)
+            results.append(result)
+        except Exception as e:
+            results.append({
+                "filename": filename,
+                "overall_score": "Error",
+                "skills": [],
+                "recommendations": [f"Error processing: {str(e)}"]
+            })
+
+    return jsonify({"folder_results": results})
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
