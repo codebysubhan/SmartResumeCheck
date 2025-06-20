@@ -27,6 +27,8 @@ function App() {
   const [evaluationEndTime, setEvaluationEndTime] = useState(null)
   const [estimatedTime, setEstimatedTime] = useState(0)
 
+  const API_BASE_URL = "https://web-production-dbb1.up.railway.app"
+
   const defaultJobDescription = `Software Engineer Position
 
 Required Skills:
@@ -234,7 +236,7 @@ Nice to Have:
         formData.append("resume", resumeFile)
         formData.append("job_description", jobDescription)
 
-      const response = await fetch('http://localhost:5000/evaluate', {
+      const response = await fetch(`${API_BASE_URL}/evaluate`, {
         method: 'POST',
         body: formData,
         })
@@ -269,7 +271,7 @@ Nice to Have:
         })
         formData.append("job_description", jobDescription)
 
-        const response = await fetch('http://localhost:5000/evaluate-folder', {
+        const response = await fetch(`${API_BASE_URL}/evaluate-folder`, {
           method: 'POST',
           body: formData,
         })
