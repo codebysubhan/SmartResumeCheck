@@ -115,7 +115,7 @@ function App() {
 
     try {
       // Real API call to backend
-      const response = await fetch('http://localhost:5000/evaluate', {
+      const response = await fetch('web-production-dbb1.up.railway.app/evaluate', {
         method: 'POST',
         body: formData,
       });
