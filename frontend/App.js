@@ -18,7 +18,7 @@ function App() {
   const [theme, setTheme] = useState("light")
   const [selectedHistoryItem, setSelectedHistoryItem] = useState(null)
   const [viewingHistory, setViewingHistory] = useState(false)
-
+  const API_BASE_URL = "https://web-production-dbb1.up.railway.app"
   const defaultJobDescription = `We are seeking a skilled Software Engineer with the following requirements:
 - Strong programming skills in Python, JavaScript, and Java
 - Experience with web development frameworks (React, Node.js)
@@ -115,7 +115,7 @@ function App() {
 
     try {
       // Real API call to backend
-      const response = await fetch('web-production-dbb1.up.railway.app/evaluate', {
+      const response = await fetch(`${API_BASE_URL}/evaluate`, {
         method: 'POST',
         body: formData,
       });
